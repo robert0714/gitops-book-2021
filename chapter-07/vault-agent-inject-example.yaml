@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-agent-inject-example
+spec:
+  selector:
+    matchLabels:
+      app: vault-agent-inject-example
+  template:
+    metadata:
+      labels:
+        app: vault-agent-inject-example
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-hello.txt: secret/hello
+        vault.hashicorp.com/role: app
+    spec:
+      containers:
+      - name: debian
+        image: debian:latest
+        command: [sleep, infinity]
